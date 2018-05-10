@@ -20,31 +20,31 @@ $base-color-map: (
 );
 
 @function light($base-color-name) {
-    @return ('light-#{$base-color-name}': lighten(map-get($map: $base-color-map, $key: $base-color-name), 10%));
+    @return ('light-#{$base-color-name}': scale-color(map-get($map: $base-color-map, $key: $base-color-name), lightness, 25%));
 }
 
 @function lighter($base-color-name) {
     $light-color: light($base-color-name);
-    @return ('lighter-#{$base-color-name}': lighten(map-get($map: $light-color, $key: 'light-#{$base-color-name}'), 10%));
+    @return ('lighter-#{$base-color-name}': scale-color(map-get($map: $light-color, $key: 'light-#{$base-color-name}'), lightness, 25%));
 }
 
 @function lightest($base-color-name) {
     $lighter-color: lighter($base-color-name);
-    @return ('lightest-#{$base-color-name}': lighten(map-get($map: $lighter-color, $key: 'lighter-#{$base-color-name}'), 10%));
+    @return ('lightest-#{$base-color-name}': scale-color(map-get($map: $lighter-color, $key: 'lighter-#{$base-color-name}'), lightness, 25%));
 }
 
 @function dark($base-color-name) {
-    @return ('dark-#{$base-color-name}': darken(map-get($map: $base-color-map, $key: $base-color-name), 10%));
+    @return ('dark-#{$base-color-name}': scale-color(map-get($map: $base-color-map, $key: $base-color-name), lightness, -25%));
 }
 
 @function darker($base-color-name) {
     $dark-color: dark($base-color-name);
-    @return ('darker-#{$base-color-name}': darken(map-get($map: $dark-color, $key: 'dark-#{$base-color-name}'), 10%));
+    @return ('darker-#{$base-color-name}': scale-color(map-get($map: $dark-color, $key: 'dark-#{$base-color-name}'), lightness, -25%));
 }
 
 @function darkest($base-color-name) {
     $darker-color: darker($base-color-name);
-    @return ('darkest-#{$base-color-name}': darken(map-get($map: $darker-color, $key: 'darker-#{$base-color-name}'), 10%));
+    @return ('darkest-#{$base-color-name}': scale-color(map-get($map: $darker-color, $key: 'darker-#{$base-color-name}'), lightness, -25%));
 }
 
 @function create-color-palate ($base-color-name, $number-of-shades) {
