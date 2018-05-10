@@ -1,3 +1,5 @@
+// http://alistapart.com/article/mixing-color-for-the-web-with-sass
+
 $base-color-map: (
     // ROY G BIV
     'red': #f00,
@@ -20,31 +22,37 @@ $base-color-map: (
 );
 
 @function light($base-color-name) {
-    @return ('light-#{$base-color-name}': scale-color(map-get($map: $base-color-map, $key: $base-color-name), lightness, 25%));
+    $white: map-get($map: $base-color-map, $key: 'white');
+    @return ('light-#{$base-color-name}': mix($white, map-get($map: $base-color-map, $key: $base-color-name), 30%));
 }
 
 @function lighter($base-color-name) {
+    $white: map-get($map: $base-color-map, $key: 'white');
     $light-color: light($base-color-name);
-    @return ('lighter-#{$base-color-name}': scale-color(map-get($map: $light-color, $key: 'light-#{$base-color-name}'), lightness, 25%));
+    @return ('lighter-#{$base-color-name}': mix($white, map-get($map: $light-color, $key: 'light-#{$base-color-name}'), 30%));
 }
 
 @function lightest($base-color-name) {
+    $white: map-get($map: $base-color-map, $key: 'white');
     $lighter-color: lighter($base-color-name);
-    @return ('lightest-#{$base-color-name}': scale-color(map-get($map: $lighter-color, $key: 'lighter-#{$base-color-name}'), lightness, 25%));
+    @return ('lightest-#{$base-color-name}': mix($white, map-get($map: $lighter-color, $key: 'lighter-#{$base-color-name}'), 30%));
 }
 
 @function dark($base-color-name) {
-    @return ('dark-#{$base-color-name}': scale-color(map-get($map: $base-color-map, $key: $base-color-name), lightness, -25%));
+    $black: map-get($map: $base-color-map, $key: 'black');
+    @return ('dark-#{$base-color-name}': mix($black, map-get($map: $base-color-map, $key: $base-color-name), 30%));
 }
 
 @function darker($base-color-name) {
+    $black: map-get($map: $base-color-map, $key: 'black');
     $dark-color: dark($base-color-name);
-    @return ('darker-#{$base-color-name}': scale-color(map-get($map: $dark-color, $key: 'dark-#{$base-color-name}'), lightness, -25%));
+    @return ('darker-#{$base-color-name}': mix($black, map-get($map: $dark-color, $key: 'dark-#{$base-color-name}'), 30%));
 }
 
 @function darkest($base-color-name) {
+    $black: map-get($map: $base-color-map, $key: 'black');
     $darker-color: darker($base-color-name);
-    @return ('darkest-#{$base-color-name}': scale-color(map-get($map: $darker-color, $key: 'darker-#{$base-color-name}'), lightness, -25%));
+    @return ('darkest-#{$base-color-name}': mix($black, map-get($map: $darker-color, $key: 'darker-#{$base-color-name}'), 30%));
 }
 
 @function create-color-palate ($base-color-name, $number-of-shades) {
