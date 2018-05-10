@@ -5,8 +5,11 @@
   "scripts": {
     "clean": "rimraf dist",
     "prebuild:dev": "npm run clean && npm run lint:dev",
-    "build:dev": "node-sass src/main.scss dist/styles.css --output-style=expanded --source-map=true",
-    "lint:dev": "sass-lint -c sass-lint.yml -f stylish -v -q"
+    "build:dev": "node-sass src/styles/main.scss dist/styles.css --output-style=expanded --source-map=true",
+    "postbuild:dev": "copyfiles --flat src/*.html dist",
+    "lint:dev": "sass-lint -c sass-lint.yml -f stylish -v -q",
+    "preserve:dev": "npm run build:dev",
+    "serve:dev": "ts-node server"
   },
   "repository": {
     "type": "git",
@@ -19,8 +22,15 @@
   },
   "homepage": "https://github.com/PdUi/styles-framework#readme",
   "devDependencies": {
+    "@types/express": "^4.11.1",
+    "@types/open": "0.0.29",
+    "copyfiles": "^2.0.0",
+    "express": "^4.16.3",
     "node-sass": "^4.9.0",
+    "open": "0.0.5",
     "rimraf": "^2.6.2",
-    "sass-lint": "^1.12.1"
+    "sass-lint": "^1.12.1",
+    "ts-node": "^6.0.3",
+    "typescript": "^2.8.3"
   }
 }

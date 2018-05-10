@@ -1,0 +1,98 @@
+$base-color-map: (
+    // ROY G BIV
+    'red': #f00,
+    'orange': #ffa500,
+    'yellow': #ff0,
+    'green': #008000,
+    'blue': #00f,
+    'indigo': #4b0082,
+    'violet': #ee82ee,
+
+    // base colors
+    'black': #000,
+    'brown': #a52a2a,
+    'grey': #808080,
+    'white': #fff,
+
+    // brand colors
+    'brand-primary': #527ecd,
+    'brand-secondary': #c8d56e
+);
+
+@function light($base-color-name) {
+    @return ('light-#{$base-color-name}': lighten(map-get($map: $base-color-map, $key: $base-color-name), 10%));
+}
+
+@function lighter($base-color-name) {
+    $light-color: light($base-color-name);
+    @return ('lighter-#{$base-color-name}': lighten(map-get($map: $light-color, $key: 'light-#{$base-color-name}'), 10%));
+}
+
+@function lightest($base-color-name) {
+    $lighter-color: lighter($base-color-name);
+    @return ('lightest-#{$base-color-name}': lighten(map-get($map: $lighter-color, $key: 'lighter-#{$base-color-name}'), 10%));
+}
+
+@function dark($base-color-name) {
+    @return ('dark-#{$base-color-name}': darken(map-get($map: $base-color-map, $key: $base-color-name), 10%));
+}
+
+@function darker($base-color-name) {
+    $dark-color: dark($base-color-name);
+    @return ('darker-#{$base-color-name}': darken(map-get($map: $dark-color, $key: 'dark-#{$base-color-name}'), 10%));
+}
+
+@function darkest($base-color-name) {
+    $darker-color: darker($base-color-name);
+    @return ('darkest-#{$base-color-name}': darken(map-get($map: $darker-color, $key: 'darker-#{$base-color-name}'), 10%));
+}
+
+@function create-color-palate ($base-color-name, $number-of-shades) {
+    @if $number-of-shades != 1 and $number-of-shades != 3 and $number-of-shades != 5 and $number-of-shades != 7 {
+        @error 'palate can only be created with 1, 3, 5, or 7 shades.';
+    }
+
+    $map: ();
+
+    @if $number-of-shades > 5 {
+        $map: map-merge($map1: $map, $map2: darkest($base-color-name));
+    }
+
+    @if $number-of-shades > 3 {
+        $map: map-merge($map1: $map, $map2: darker($base-color-name));
+    }
+
+    @if $number-of-shades > 1 {
+        $map: map-merge($map1: $map, $map2: dark($base-color-name));
+    }
+
+    $map: map-merge($map1: $map, $map2: ($base-color-name: map-get($map: $base-color-map, $key: $base-color-name)));
+
+    @if $number-of-shades > 1 {
+        $map: map-merge($map1: $map, $map2: light($base-color-name));
+    }
+
+    @if $number-of-shades > 3 {
+        $map: map-merge($map1: $map, $map2: lighter($base-color-name));
+    }
+
+    @if $number-of-shades > 5 {
+        $map: map-merge($map1: $map, $map2: lightest($base-color-name));
+    }
+
+    @return $map;
+}
+
+$greys: create-color-palate('grey', 7);
+$browns: create-color-palate('brown', 7);
+$reds: create-color-palate('red', 7);
+$oranges: create-color-palate('orange', 7);
+$yellows: create-color-palate('yellow', 7);
+$greens: create-color-palate('green', 7);
+$blues: create-color-palate('blue', 7);
+$indigos: create-color-palate('indigo', 7);
+$violets: create-color-palate('violet', 7);
+$brand-primarys: create-color-palate('brand-primary', 7);
+$brand-secondarys: create-color-palate('brand-secondary', 7);
+
+$palette: $greys, $browns, $reds, $oranges, $yellows, $greens, $blues, $indigos, $violets, $brand-primarys, $brand-secondarys;
