@@ -5,7 +5,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "prebuild:dev": "npm run clean && npm run lint:dev",
-    "build:dev": "node-sass src/styles/main.scss dist/styles.css --output-style=expanded --source-map=true",
+    "build:dev": "node-sass src/styles -o dist --output-style=expanded --source-map=true",
     "postbuild:dev": "copyfiles --flat src/*.html dist",
     "lint:dev": "sass-lint -c sass-lint.yml -f stylish -v -q",
     "preserve:dev": "npm run build:dev",

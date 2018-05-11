@@ -1,0 +1,81 @@
+/*
+    Lonely Planet
+    https://github.com/lonelyplanet/rizzo/blob/master/app/assets/stylesheets/core/core_components/_buttons.sass
+    Salesforce
+    https://github.com/salesforce-ux/design-system/tree/master/ui/components/buttons
+    Solid
+    https://github.com/buzzfeed/solid/blob/master/_lib/solid-utilities/_buttons.scss
+
+    Additional References:
+    http://www.thesassway.com/intermediate/dynamically-change-text-color-based-on-its-background-with-sass
+*/
+@import '../variables/index';
+@import '../functions/index';
+
+@mixin border ($color) {
+    border: $two-pixels solid $color;
+}
+
+@mixin button-colors ($color-name, $color) {
+    background-color: $color;
+    color: contrasting-color($color, $white, $black);
+
+    &:hover {
+        &:not([disabled]) {
+            @include border(map-get(darker($color-name), 'darker-#{$color-name}'));
+
+            &:not(.outlined) {
+                background-color: map-get(dark($color-name), 'dark-#{$color-name}');
+            }
+
+            &.outlined {
+                color: map-get(darker($color-name), 'darker-#{$color-name}');
+            }
+        }
+    }
+
+    &.outlined {
+        @include border($color);
+
+        background-color: $white;
+        color: $color;
+    }
+
+    &[disabled] {
+        &:not(.outlined) {
+            background-color: map-get(lighter($color-name), 'lighter-#{$color-name}');
+        }
+
+        &.outlined {
+            @include border(map-get(lighter($color-name), 'lighter-#{$color-name}'));
+
+            color: map-get(lighter($color-name), 'lighter-#{$color-name}');
+        }
+    }
+}
+
+input {
+    &.small {
+        font-size: $sixteen-pixels;
+    }
+
+    &.medium {
+        font-size: $sixteen-pixels * 1.25;
+    }
+
+    &.large {
+        font-size: $sixteen-pixels * 1.5;
+    }
+
+    &[type='button'] {
+        @include border(transparent);
+        border-radius: $sixteen-pixels * .9;
+        cursor: pointer;
+        line-height: $sixteen-pixels * 1.5;
+        padding: $five-pixels $ten-pixels;
+    }
+
+    &[disabled] {
+        cursor: default;
+    }
+}

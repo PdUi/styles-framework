@@ -10,7 +10,7 @@ const app = express();
 app.use(express.static('dist'));
 
 app.get('/', function(request, response) {
-  response.sendFile(join(__dirname, './dist/index.html'));
+  response.sendFile(join(__dirname, './dist/buttons.html'));
 });
 
 app.listen(port, function(error) {

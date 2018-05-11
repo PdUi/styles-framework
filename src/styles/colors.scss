@@ -12,12 +12,12 @@
 
 span {
     &.black {
-        background-color: map-get($map: $base-color-map, $key: 'black');
+        background-color: $black;
     }
 
     @include background-colors($palette);
 
     &.white {
-        background-color: map-get($map: $base-color-map, $key: 'white');
+        background-color: $white;
     }
 }

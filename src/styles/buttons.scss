@@ -1,0 +1,15 @@
+@import './components/index';
+
+@mixin buttons ($color-set) {
+    @each $color-name, $color in $color-set {
+        &[class~='#{$color-name}'] {
+            @include button-colors($color-name, $color);
+        }
+    }
+}
+
+input {
+    &[type='button'] {
+        @include buttons($base-color-map);
+    }
+}
