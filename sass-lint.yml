@@ -54,7 +54,10 @@ rules:
   class-name-format: 1
   function-name-format: 1
   id-name-format: 0
-  mixin-name-format: 1
+  mixin-name-format:
+    - 1
+    -
+      allow-leading-underscore: true
   placeholder-name-format: 1
   variable-name-format: 1
 

@@ -110,4 +110,38 @@ $violets: create-color-palate('violet', 7);
 $brand-primarys: create-color-palate('brand-primary', 7);
 $brand-secondarys: create-color-palate('brand-secondary', 7);
 
-$palette: $greys, $browns, $reds, $oranges, $yellows, $greens, $blues, $indigos, $violets, $brand-primarys, $brand-secondarys;
+$all-color-maps: $greys, $browns, $reds, $oranges, $yellows, $greens, $blues, $indigos, $violets, $brand-primarys, $brand-secondarys;
+
+$palette: map-merge(
+    map-merge(
+        map-merge(
+            map-merge(
+                map-merge(
+                    map-merge(
+                        map-merge(
+                            map-merge(
+                                map-merge(
+                                    map-merge(
+                                        map-merge(
+                                            ('black': $black, 'white': $white),
+                                                $greys),
+                                        $browns),
+                                    $reds),
+                                $oranges),
+                            $yellows),
+                        $greens),
+                    $blues),
+                $indigos),
+            $violets),
+        $brand-primarys),
+    $brand-secondarys);
+
+$all-base-color-names: ();
+@each $color-name, $color in $base-color-map {
+    $all-base-color-names: append($all-base-color-names, $color-name, 'comma');
+}
+
+$all-color-names: ();
+@each $color-name, $color in $palette {
+    $all-color-names: append($all-color-names, $color-name, 'comma');
+}

@@ -1,7 +1,7 @@
 @import './variables/index';
 
-@mixin background-colors ($palette) {
-    @each $color-set in $palette {
+@mixin background-colors ($all-color-maps) {
+    @each $color-set in $all-color-maps {
         @each $color-name, $color in $color-set {
             &.#{$color-name} {
                 background-color: $color;
@@ -15,7 +15,7 @@ span {
         background-color: $black;
     }
 
-    @include background-colors($palette);
+    @include background-colors($all-color-maps);
 
     &.white {
         background-color: $white;

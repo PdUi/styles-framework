@@ -1,4 +1,5 @@
 @import '../variables/index';
+@import './math';
 
 // http://www.thesassway.com/intermediate/dynamically-change-text-color-based-on-its-background-with-sass
 @function get-contrast-color ($color) {
@@ -9,14 +10,13 @@
     }
 }
 
-// Brightness math based on:
-//   http://www.nbdtech.com/Blog/archive/2008/04/27/Calculating-the-Perceived-Brightness-of-a-Color.aspx
-$red-magic-number: 241;
-$green-magic-number: 691;
-$blue-magic-number: 68;
-$brightness-divisor: $red-magic-number + $green-magic-number + $blue-magic-number;
-
 @function brightness($color) {
+    // Brightness math based on: http://www.nbdtech.com/Blog/archive/2008/04/27/Calculating-the-Perceived-Brightness-of-a-Color.aspx
+    $red-magic-number: 241;
+    $green-magic-number: 691;
+    $blue-magic-number: 68;
+    $brightness-divisor: $red-magic-number + $green-magic-number + $blue-magic-number;
+
     // Extract color components
     $red-component: red($color);
     $green-component: green($color);
