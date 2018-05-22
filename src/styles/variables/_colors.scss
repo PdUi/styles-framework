@@ -34,6 +34,10 @@ $base-color-map: (
 $black: map-get($base-color-map, 'black');
 $white: map-get($base-color-map, 'white');
 
+@function add-base-color($color-name, $color) {
+    $base-color-map: map-merge($base-color-map, ($color-name: $color));
+}
+
 @function light($base-color-name) {
     @return ('light-#{$base-color-name}': mix($white, map-get($base-color-map, $base-color-name), 30%));
 }
