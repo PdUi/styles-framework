@@ -1,0 +1,102 @@
+// /*
+//     Lonely Planet
+//     https://github.com/lonelyplanet/rizzo/blob/master/app/assets/stylesheets/core/core_components/_buttons.sass
+//     Salesforce
+//     https://github.com/salesforce-ux/design-system/tree/master/ui/components/buttons
+//     Solid
+//     https://github.com/buzzfeed/solid/blob/master/_lib/solid-utilities/_buttons.scss
+
+//     Additional References:
+//     http://www.thesassway.com/intermediate/dynamically-change-text-color-based-on-its-background-with-sass
+// */
+
+@import '../variables/colors';
+@import '../functions/colors';
+
+@mixin _button-colors ($background-color-name, $text-color-name: null) {
+    $background-color: map-get($palette, $background-color-name);
+
+    background-color: $background-color;
+    @if ($text-color-name != null) {
+        $text-color: map-get($palette, $text-color-name);
+        color: $text-color;
+        // TODO: incorporate logic for contrasting colors, lighter or darker based on background-color 'lightness'
+        // color: contrasting-color($background-color, map-get($palette, 'lighter-#{$text-color-name}'), $text-color);
+    } @else {
+        color: contrasting-color($background-color, $white, $black);
+    }
+
+    &[disabled] {
+        background-color: map-get(lighter($background-color-name), 'lighter-#{$background-color-name}');
+    }
+
+    &:active {
+        background-color: map-get(darker($background-color-name), 'darker-#{$background-color-name}') !important; // sass-lint:disable-line no-important
+        color: map-get(dark($background-color-name), 'dark-#{$background-color-name}');
+    }
+
+    &:focus,
+    &:hover {
+        &:not([disabled]) {
+            background-color: map-get(dark($background-color-name), 'dark-#{$background-color-name}');
+        }
+    }
+}
+
+@mixin buttons ($colors-lists: ('grey': 'brand-primary')) {
+    button,
+    %btn {
+        border: 1px solid transparent;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 600;
+        line-height: 1.43em;
+        padding: .64em;
+        transition: background-color .1s ease 0s;
+
+        &[disabled] {
+            cursor: default;
+        }
+
+        &.medium {
+            font-size: 1.25em;
+        }
+
+        &.large {
+            font-size: 1.5em;
+        }
+
+        @each $color-set in $colors-lists {
+            @if (type-of($color-set) == map) {
+                @each $background-color-name, $text-color-name in $color-set {
+                    @if ($background-color-name == 'grey') {
+                        @include _button-colors($background-color-name, $text-color-name);
+                    } @else {
+                        &.#{$background-color-name} {
+                            @include _button-colors($background-color-name, $text-color-name);
+                        }
+                    }
+                }
+            } @else if (type-of($color-set) == string) {
+                @if ($color-set == 'grey') {
+                    @include _button-colors($color-set);
+                } @else {
+                    &.#{$color-set} {
+                        @include _button-colors($color-set);
+                    }
+                }
+            }
+        }
+    }
+
+    input {
+        &[type='button'] {
+            @extend %btn;
+        }
+
+        &[type='submit'] {
+            @extend %btn;
+        }
+    }
+}

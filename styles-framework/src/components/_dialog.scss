@@ -1,0 +1,35 @@
+@import '../variables/colors';
+
+dialog {
+    border: 1px solid map-get($palette, 'dark-grey');
+    border-radius: 5px;
+    left: 50%;
+    margin: .7em;
+    max-width: 600px;
+    padding: .7em;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+
+    &.full-screen {
+        margin: 0;
+        max-width: unset;
+    }
+
+    &.small {
+        max-width: 250px;
+    }
+
+    &.large {
+        max-width: 1000px;
+    }
+
+    i {
+        &.close {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+        }
+    }
+}

@@ -1,5 +1,0 @@
-@import './variables/index';
-@import './components/index';
-
-// @include buttons((('grey': 'brand-primary'), 'blue'));
-@include buttons($all-base-color-names);

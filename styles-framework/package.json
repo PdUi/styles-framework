@@ -1,0 +1,30 @@
+{
+  "name": "pd-styles",
+  "version": "0.0.1",
+  "description": "This is meant as a learning exercise for me to become more comfortable with CSS, especially in the context of creating a framework with it.",
+  "scripts": {
+    "clean": "rimraf dist",
+    "prebuild:dev": "npm run clean && npm run lint:dev",
+    "build:dev": "node-sass src/styles -o dist --output-style=expanded --source-map=true",
+    "postbuild:dev": "copyfiles --flat src/*.html dist",
+    "lint:dev": "sass-lint -c sass-lint.yml -f stylish -v -q"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PdUi/styles-framework.git"
+  },
+  "author": "Peineary Development",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PdUi/styles-framework/issues"
+  },
+  "homepage": "https://github.com/PdUi/styles-framework#readme",
+  "devDependencies": {
+    "copyfiles": "^2.0.0",
+    "node-sass": "^4.9.0",
+    "rimraf": "^2.6.2",
+    "sass-lint": "^1.12.1",
+    "ts-node": "^6.0.3",
+    "typescript": "^2.8.3"
+  }
+}

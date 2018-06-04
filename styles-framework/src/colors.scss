@@ -1,0 +1,23 @@
+@import './variables/index';
+
+@mixin background-colors ($all-color-maps) {
+    @each $color-set in $all-color-maps {
+        @each $color-name, $color in $color-set {
+            &.#{$color-name} {
+                background-color: $color;
+            }
+        }
+    }
+}
+
+span {
+    &.black {
+        background-color: $black;
+    }
+
+    @include background-colors($all-color-maps);
+
+    &.white {
+        background-color: $white;
+    }
+}

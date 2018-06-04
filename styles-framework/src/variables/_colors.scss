@@ -1,0 +1,151 @@
+/*
+    Lonely Planet
+    https://github.com/lonelyplanet/rizzo/blob/master/app/assets/stylesheets/sass/variables/_colour_palette.sass
+    Salesforce
+    https://github.com/salesforce-ux/design-system/blob/040ffba4d89aad6ce739bbc59afd7ec2e1ac8c55/design-tokens/color-palettes.yml
+    Solid
+    https://github.com/buzzfeed/solid/blob/master/_lib/solid-helpers/_variables.scss
+
+    Additional References:
+    Color Mixing in Sass: http://alistapart.com/article/mixing-color-for-the-web-with-sass
+*/
+
+$base-color-map: (
+    // ROY G BIV
+    'red': #f00,
+    'orange': #ffa500,
+    'yellow': #ff0,
+    'green': #008000,
+    'blue': #00f,
+    'indigo': #4b0082,
+    'violet': #ee82ee,
+
+    // base colors
+    'black': #000,
+    'brown': #a52a2a,
+    'grey': #808080,
+    'white': #fff,
+
+    // brand colors
+    'brand-primary': #527ecd,
+    'brand-secondary': #c8d56e
+);
+
+$black: map-get($base-color-map, 'black');
+$white: map-get($base-color-map, 'white');
+
+@function add-base-color($color-name, $color) {
+    $base-color-map: map-merge($base-color-map, ($color-name: $color));
+}
+
+@function light($base-color-name) {
+    @return ('light-#{$base-color-name}': mix($white, map-get($base-color-map, $base-color-name), 30%));
+}
+
+@function lighter($base-color-name) {
+    $light-color: light($base-color-name);
+    @return ('lighter-#{$base-color-name}': mix($white, map-get($light-color, $key: 'light-#{$base-color-name}'), 30%));
+}
+
+@function lightest($base-color-name) {
+    $lighter-color: lighter($base-color-name);
+    @return ('lightest-#{$base-color-name}': mix($white, map-get($lighter-color, 'lighter-#{$base-color-name}'), 30%));
+}
+
+@function dark($base-color-name) {
+    @return ('dark-#{$base-color-name}': mix($black, map-get($base-color-map, $base-color-name), 30%));
+}
+
+@function darker($base-color-name) {
+    $dark-color: dark($base-color-name);
+    @return ('darker-#{$base-color-name}': mix($black, map-get($dark-color, 'dark-#{$base-color-name}'), 30%));
+}
+
+@function darkest($base-color-name) {
+    $darker-color: darker($base-color-name);
+    @return ('darkest-#{$base-color-name}': mix($black, map-get($darker-color, 'darker-#{$base-color-name}'), 30%));
+}
+
+@function create-color-palate ($base-color-name, $number-of-shades) {
+    @if $number-of-shades != 1 and $number-of-shades != 3 and $number-of-shades != 5 and $number-of-shades != 7 {
+        @error 'palate can only be created with 1, 3, 5, or 7 shades.';
+    }
+
+    $map: ();
+
+    @if $number-of-shades > 5 {
+        $map: map-merge($map, darkest($base-color-name));
+    }
+
+    @if $number-of-shades > 3 {
+        $map: map-merge($map, darker($base-color-name));
+    }
+
+    @if $number-of-shades > 1 {
+        $map: map-merge($map, dark($base-color-name));
+    }
+
+    $map: map-merge($map, ($base-color-name: map-get($base-color-map, $base-color-name)));
+
+    @if $number-of-shades > 1 {
+        $map: map-merge($map, light($base-color-name));
+    }
+
+    @if $number-of-shades > 3 {
+        $map: map-merge($map, lighter($base-color-name));
+    }
+
+    @if $number-of-shades > 5 {
+        $map: map-merge($map, lightest($base-color-name));
+    }
+
+    @return $map;
+}
+
+$greys: create-color-palate('grey', 7);
+$browns: create-color-palate('brown', 7);
+$reds: create-color-palate('red', 7);
+$oranges: create-color-palate('orange', 7);
+$yellows: create-color-palate('yellow', 7);
+$greens: create-color-palate('green', 7);
+$blues: create-color-palate('blue', 7);
+$indigos: create-color-palate('indigo', 7);
+$violets: create-color-palate('violet', 7);
+$brand-primarys: create-color-palate('brand-primary', 7);
+$brand-secondarys: create-color-palate('brand-secondary', 7);
+
+$all-color-maps: $greys, $browns, $reds, $oranges, $yellows, $greens, $blues, $indigos, $violets, $brand-primarys, $brand-secondarys;
+
+$palette: map-merge(
+    map-merge(
+        map-merge(
+            map-merge(
+                map-merge(
+                    map-merge(
+                        map-merge(
+                            map-merge(
+                                map-merge(
+                                    map-merge(
+                                        map-merge(
+                                            ('black': $black, 'white': $white),
+                                                $greys),
+                                        $browns),
+                                    $reds),
+                                $oranges),
+                            $yellows),
+                        $greens),
+                    $blues),
+                $indigos),
+            $violets),
+        $brand-primarys),
+    $brand-secondarys);
+
+$all-base-color-names: ();
+@each $color-name, $color in $base-color-map {
+    $all-base-color-names: append($all-base-color-names, $color-name, 'comma');
+}
+
+$all-color-names: ();
+@each $color-name, $color in $palette {
+    $all-color-names: append($all-color-names, $color-name, 'comma');
+}
