@@ -23,7 +23,8 @@ export class TabsComponent implements AfterContentInit {
         data: 'world!'
       },
       {
-        displayStrategy: new DisplayStrategy('Hello there!')
+        displayStrategy: new DisplayStrategy('Hello there!'),
+        isCurrent: true
       }
     ];
   }

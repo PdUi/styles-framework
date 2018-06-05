@@ -2,4 +2,5 @@
 @import './variables/index';
 @import './components/index';
 
-@include buttons((('grey': 'primary'), 'primary'));
+@include buttons((('grey': 'brand-primary'), 'brand-primary'));
+@include tabs;

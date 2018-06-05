@@ -1,0 +1,37 @@
+@import '../variables/colors';
+
+@mixin tabs ($colors-map: ('active': 'brand-primary', 'default': 'grey')) {
+    [role='tabpanel'] {
+        display: flex;
+        flex-direction: row;
+
+        &.stacked {
+            flex-direction: column;
+        }
+
+        > [role='tab'] {
+            color: map-get($palette, map-get($colors-map, 'default'));
+            cursor: pointer;
+            font-size: 1.14em;
+            padding: 1.14em;
+            text-align: center;
+            text-transform: uppercase;
+
+            &.active {
+                border-bottom: 1px solid map-get($palette, map-get($colors-map, 'active'));
+                color: map-get($palette, map-get($colors-map, 'active'));
+            }
+
+            &:focus {
+                outline: none;
+            }
+
+            &:hover {
+                &:not(.active) {
+                    border-bottom: 1px solid map-get($palette, 'dark-#{map-get($colors-map, 'default')}');
+                    color: map-get($palette, 'dark-#{map-get($colors-map, 'default')}');
+                }
+            }
+        }
+    }
+}

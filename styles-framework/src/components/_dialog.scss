@@ -5,7 +5,7 @@ dialog {
     border-radius: 5px;
     left: 50%;
     margin: .7em;
-    max-width: 600px;
+    max-width: 31.25em;
     padding: .7em;
     position: absolute;
     top: 50%;
@@ -18,18 +18,18 @@ dialog {
     }
 
     &.small {
-        max-width: 250px;
+        max-width: 15.625em;
     }
 
     &.large {
-        max-width: 1000px;
+        max-width: 62.5em;
     }
 
     i {
         &.close {
             position: absolute;
-            right: 5px;
-            top: 5px;
+            right: .35em;
+            top: .35em;
         }
     }
 }
