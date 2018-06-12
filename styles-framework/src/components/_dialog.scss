@@ -4,18 +4,17 @@
 
 dialog {
     border: 1px solid map-get($palette, 'dark-grey');
-    border-radius: 5px;
-    height: calc(100% - 2em);
+    border-radius: .35em;
+    height: calc(100% - 1.4em);
     left: 50%;
-    margin: .7em;
+    margin: 0;
     max-height: 100%;
     max-width: 31.25em;
-    overflow-y: auto;
-    padding: .7em;
+    padding: .7em 0 0;
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: calc(100% - 2em);
+    width: calc(100% - 1.4em);
 
     &.full-screen {
         max-width: unset;
@@ -32,9 +31,9 @@ dialog {
     i {
         &.close {
             cursor: pointer;
-            position: absolute;
-            right: .35em;
-            top: .35em;
+            float: right;
+            margin: -.35em .35em 0 0;
+            position: sticky;
         }
     }
 }
