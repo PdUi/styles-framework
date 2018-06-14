@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import {
+  Component
+} from '@angular/core';
 
 import * as lorem from 'lorem-ipsum';
+
+import { Position } from '../../projects/ng-pd/src/dialog/position.enum';
 
 enum DialogSize {
   Standard = 0,
@@ -17,18 +21,12 @@ enum DialogSize {
   <button (click)="openDialog(DialogSize.Large)">Open Large Dialog</button>
   <button (click)="openDialog(DialogSize.FullScreen)">Open Full Screen Dialog</button>
 
-  <dialog [open]="isOpen" (close)="isOpen = false" [ngClass]="getDialogSize()">
-    <i class="close" (click)="closeDialog()">x</i>
-    <p>{{lorem}}</p>
-  </dialog>
-  `,
-  styles: [
-    `p { height: calc(100% - 16px); }`,
-    `p { overflow-y: auto; }`,
-    `p { margin: 16px 0 0; }`,
-    `p { word-break: break-all; }`,
-    `p { word-break: break-word; }`
-  ]
+  <pd-dialog [open]="isOpen" (close)="isOpen = false" [position]="position">
+    <header>{{loremHeader}}</header>
+    <main>{{loremMain}}</main>
+    <footer>{{loremFooter}}</footer>
+  </pd-dialog>
+  `
 })
 export class DialogComponent {
   DialogSize = DialogSize;
@@ -36,20 +34,45 @@ export class DialogComponent {
   private size: DialogSize;
 
   isOpen = false;
-  lorem = '';
+  loremHeader = '';
+  loremMain = '';
+  loremFooter = '';
+  position = Position.Center;
 
   openDialog(size: DialogSize) {
-    this.lorem = lorem({
-      count: 7                      // Number of words, sentences, or paragraphs to generate.
-    , units: 'paragraphs'           // Generate words, sentences, or paragraphs.
-    , sentenceLowerBound: 5         // Minimum words per sentence.
-    , sentenceUpperBound: 15        // Maximum words per sentence.
-    , paragraphLowerBound: 3        // Minimum sentences per paragraph.
-    , paragraphUpperBound: 7        // Maximum sentences per paragraph.
-    , format: 'plain'               // Plain text or html
-  });
+    this.loremMain = lorem({
+      count: 3,
+      units: 'paragraphs',
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 3,
+      paragraphUpperBound: 7,
+      format: 'plain'
+    });
+
+    this.loremHeader = lorem({
+        count: 1,
+        units: 'paragraphs',
+        sentenceLowerBound: 5,
+        sentenceUpperBound: 15,
+        paragraphLowerBound: 3,
+        paragraphUpperBound: 7,
+        format: 'plain'
+    });
+
+    this.loremFooter = lorem({
+      count: 2,
+      units: 'paragraphs',
+      sentenceLowerBound: 5,
+      sentenceUpperBound: 15,
+      paragraphLowerBound: 3,
+      paragraphUpperBound: 7,
+      format: 'plain'
+    });
+
     this.size = size;
     this.isOpen = true;
+    this.position = this.position === Position.TopLeft ? Position.Center : <Position> this.position + 1;
   }
 
   closeDialog() {

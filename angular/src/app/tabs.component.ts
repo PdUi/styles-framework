@@ -8,7 +8,8 @@ import { ITabDefinition, DisplayStrategy } from '../../projects/ng-pd/src/public
   <ng-template #tab let-data>
     <i>&#1421;</i> Hello ({{data}})
   </ng-template>
-  <pd-tabs [tabDefinitions]="tabDefinitions"></pd-tabs>
+  <pd-tabs class="foo" [tabDefinitions]="tabDefinitions"></pd-tabs>
+  <p class="bar">slkdjflksajdflkjsldfkjlaskdjflaskjdflksajdflkasjldfkjasldkfjalskdfjlaskjdfl</p>
   `
 })
 export class TabsComponent implements AfterContentInit {

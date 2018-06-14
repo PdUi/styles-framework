@@ -24,35 +24,43 @@ export class PdDialogDirective {
 
   @Output() close = new EventEmitter();
 
-  constructor(private el: ElementRef, renderer: Renderer2) {
+  constructor(
+    private el: ElementRef,
+    renderer: Renderer2
+  ) {
     dialogPolyfill.registerDialog(el.nativeElement);
     renderer.listen(el.nativeElement, 'click', (e: MouseEvent) => {
       const dialog = <HTMLElement> el.nativeElement;
       if (this.clickOutsideDialogWidth(dialog, e) || this.clickOutsideDialogHeight(dialog, e)) {
-        this.el.nativeElement.close();
         this.close.emit();
+        this.el.nativeElement.close();
       }
     });
   }
 
   private clickOutsideDialogWidth(dialog: HTMLElement, e: MouseEvent) {
-    const effectiveLeftBoundary = dialog.offsetLeft - (dialog.offsetWidth / 2);
+    const isOnLeft = dialog.classList.contains('left');
+    const isOnRight = dialog.classList.contains('right');
+    const effectiveLeftBoundary = isOnLeft ? 0 : (dialog.offsetLeft - (isOnRight ? dialog.offsetWidth : (dialog.offsetWidth / 2)));
     const effectiveRightBoundary = effectiveLeftBoundary + dialog.offsetWidth;
+
     if (effectiveLeftBoundary <= e.clientX && e.clientX <= effectiveRightBoundary) {
       return false;
     }
 
-    return true;
+    return dialog === e.currentTarget;
   }
 
   private clickOutsideDialogHeight(dialog: HTMLElement, e: MouseEvent) {
-    const effectiveTopBoundary = dialog.offsetTop - (dialog.offsetHeight / 2);
+    const isOnTop = dialog.classList.contains('top');
+    const isOnBottom = dialog.classList.contains('bottom');
+    const effectiveTopBoundary = isOnTop ? 0 : (dialog.offsetTop - (isOnBottom ? dialog.offsetHeight : (dialog.offsetHeight / 2)));
     const effectiveBottomBoundary = effectiveTopBoundary + dialog.offsetHeight;
 
     if (effectiveTopBoundary <= e.clientY && e.clientY <= effectiveBottomBoundary) {
       return false;
     }
 
-    return true;
+    return dialog === e.currentTarget;
   }
 }
